@@ -2,6 +2,16 @@
 
 A guide for setting up the LLaMA 2 LLM on a local ubuntu machine.
 
+- [LLaMA-2 Setup Guide](#llama-2-setup-guide)
+  - [Prerequisites](#prerequisites)
+  - [Background](#background)
+    - [Model Sizes](#model-sizes)
+    - [Model Formats](#model-formats)
+    - [CPU vs GPU Memory](#cpu-vs-gpu-memory)
+  - [Obtaining a Model](#obtaining-a-model)
+    - [Recommended Models](#recommended-models)
+  - [Running Your Model](#running-your-model)
+
 ## Prerequisites
 
 You'll need a capable machine that:
