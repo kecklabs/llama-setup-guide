@@ -1,2 +1,53 @@
-# llama-setup-guide
-A guide for setting up the LlAmA2 LLM
+# LLaMA-2 Setup Guide
+
+A guide for setting up the LLaMA 2 LLM on a local ubuntu machine.
+
+## Prerequisites
+
+- A capable local machine:
+  - Running Ubuntu or other Linux distribution
+  - Enough RAM to fit your model of choice in memory
+    - GPU memory is highly preferred (see [background](#background))
+
+## Background
+
+### Model Sizes
+
+LLaMA 2 is available in three sizes: 7B, 13B, and 70B. These numbers refer to the number of parameters in the model. Generally, smaller models are much faster but less accurate, while larger models are slower but more accurate.
+
+In my experience, the smaller models are sufficient for question answering and text generation, but struggle with more complex tasks like logic puzzles and decision making based on evidence. I recommend trying out various models to see what works best for your use case.
+
+### Model Formats
+
+You might come across a few different formats of LLaMA2 models online, including transformers, GPTQ, GGML, GGUF, and others. Each of these has a different setup process and requirements (which I won't include here). I reccomend using **GGUF** models via **llama.cpp** because:
+
+- They support splitting models between CPU and GPU memory (see [CPU vs GPU Memory](#cpu-vs-gpu-memory))
+- They support quantization, which greatly reduces the memory footprint with minimal accuracy loss
+- Easy setup and transportability (since they are just a single file)
+
+### CPU vs GPU Memory
+
+When running any LLM, the entire model must be loaded into the memory of the machine. Every model has different memory requirements, typically listed somewhere in the model's documentation. The larger the model, the more memory it requires.
+
+There are two types of memory available on most machines: CPU (RAM) and GPU (VRAM). CPU memory is typically much larger than GPU memory, but also _significantly_ slower. I highly recommend running your model on a GPU if possible.
+
+One benefit of using a GGUF model is that you can split the model between CPU and GPU memory. For instance, if you are running a 20GB model on a system with only 12GB of VRAM, you can split the model into roughly 12GB on the GPU and 8GB on the CPU. It will be slower than running the entire model on the GPU, but much faster than running the entire model on the CPU.
+
+## Obtaining a Model
+
+[HuggingFace](https://huggingface.co/) is a great resource for finding and downloading models. You can find the list of all Llama 2 models [here](https://huggingface.co/models?other=llama-2). Remember that there are multiple model formats, so look for GGUF if you want to use llama.cpp.
+
+GGUF models often have multiple downloads for different quantization levels (`Q4_K_M`, `Q2_K`, etc). This affects the accuracy and memory footprint of the model. I recommend starting with `Q4_K_M` for balanced size and quality.
+
+### Recommended Models
+
+- [orca_mini_v3_7B](https://huggingface.co/TheBloke/orca_mini_v3_7B-GGUF) is a great starting point and one of the best 7B models I've found. It also comes in 13B and 70B sizes if you need better accuracy.
+- [Upstage-Llama-2-70B-instruct-v2-GGUF](https://huggingface.co/TheBloke/Upstage-Llama-2-70B-instruct-v2-GGUF) is one of the top ranked 70B models on huggingface and has been effective for decision making and other complex tasks.
+
+## Running Your Model
+
+[!] I highly recommend using a virtual environment for this installation (either `conda` or `venv`). Documentation on this can be found [here](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/).
+
+1. Step One
+2. Step Two
+3. Step Three
