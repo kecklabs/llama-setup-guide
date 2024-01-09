@@ -4,10 +4,13 @@ A guide for setting up the LLaMA 2 LLM on a local ubuntu machine.
 
 ## Prerequisites
 
-- A capable local machine:
-  - Running Ubuntu or other Linux distribution
-  - Enough RAM to fit your model of choice in memory
-    - GPU memory is highly preferred (see [background](#background))
+You'll need a capable machine that:
+
+- Runs Ubuntu or some other Linux distribution
+- Has enough RAM to fit any models you want to use in memory
+  - GPU memory (VRAM) is highly preferred (see [background](#background))
+- Has sufficient local storage to store models
+- Has Python 3.8 or higher installed
 
 ## Background
 
