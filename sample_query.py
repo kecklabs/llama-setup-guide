@@ -3,7 +3,7 @@ from llama_cpp import Llama
 llm = Llama(
     model_path="PATH_TO_MODEL",  # Replace with path to your model file!
     n_ctx=4096,  # Context window size
-    n_gpu_layers=-1  # Use all GPU layers
+    n_gpu_layers=-1  # -1 to use all GPU layers, 0 to use only CPU
 )
 
 output = llm(
