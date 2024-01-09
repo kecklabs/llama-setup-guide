@@ -51,6 +51,41 @@ GGUF models often have multiple downloads for different quantization levels (`Q4
 
 [!] I highly recommend using a virtual environment for this installation (either `conda` or `venv`). Documentation on this can be found [here](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/).
 
-1. Step One
-2. Step Two
-3. Step Three
+We will use the [llama-cpp-python](https://github.com/abetlen/llama-cpp-python) package to run our model:
+
+1. Install the `llama-cpp-python` package in your virtual environment:
+
+```bash
+pip install llama-cpp-python
+```
+
+2. Create a python script to load and query your model. See this example (also in `sample_query.py`):
+
+```python
+from llama_cpp import Llama
+
+llm = Llama(
+    model_path="PATH_TO_MODEL",  # Replace with path to your model file!
+    n_ctx=4096,  # Context window size
+    n_gpu_layers=-1  # Use all GPU layers
+)
+
+output = llm(
+    "Q: Name the planets in the solar system? A: ",  # Prompt
+    max_tokens=32,  # Generate up to 32 tokens
+    stop=["Q:", "\n"],  # Keywords to stop generation at
+    echo=True  # Echo the prompt back in the output
+)
+
+print(output)  # Print the generated output
+```
+
+Remember to replace `PATH_TO_MODEL` with the path to your model file (from this script).
+
+3. Run the script!
+
+```bash
+python query.py
+```
+
+It may take some time to load the model, but you should soon see output in the console!
