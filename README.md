@@ -11,6 +11,12 @@ A guide for setting up the LLaMA 2 LLM on a local ubuntu machine.
   - [Obtaining a Model](#obtaining-a-model)
     - [Recommended Models](#recommended-models)
   - [Running Your Model](#running-your-model)
+    - [Troubleshooting](#troubleshooting)
+  - [Setting Up an API Server](#setting-up-an-api-server)
+    - [Creating a Flask API Route](#creating-a-flask-api-route)
+    - [Remote API Access via ngrok](#remote-api-access-via-ngrok)
+  - [Integration with Microsoft Guidance](#integration-with-microsoft-guidance)
+  - [Resources](#resources)
 
 ## Prerequisites
 
@@ -99,3 +105,27 @@ python sample_query.py
 ```
 
 Note that this may take a while to run since the model must be loaded into memory. Once the model is loaded (by calling `Llama()`), subsequent calls to `llm()` will be much faster.
+
+### Troubleshooting
+
+TODO
+
+## Setting Up an API Server
+
+TODO
+
+### Creating a Flask API Route
+
+TODO
+
+### Remote API Access via ngrok
+
+TODO
+
+## Integration with Microsoft Guidance
+
+TODO
+
+## Resources
+
+TODO
