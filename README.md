@@ -16,7 +16,6 @@ A guide for setting up the LLaMA 2 LLM on a local ubuntu machine.
   - [Running Your Model](#running-your-model)
     - [Model Query Troubleshooting](#model-query-troubleshooting)
   - [Setting Up an API Server](#setting-up-an-api-server)
-    - [Creating an API Route to Query the Model](#creating-an-api-route-to-query-the-model)
     - [Remote API Access](#remote-api-access)
   - [Integration with Microsoft Guidance](#integration-with-microsoft-guidance)
   - [Resources](#resources)
@@ -149,15 +148,20 @@ You may see `CUDA error: out of memory` if the model is too large to fit in GPU 
 
 ## Setting Up an API Server
 
-TODO
+While you could run and query your model from directly within your application, it is often more convenient to run the model on a separate server and query it via an API (similar to how OpenAI's API works). There are many possible ways to do this, but a simple solution is a basic Flask API. A sample of this can be found in `sample_api.py`.
 
-### Creating an API Route to Query the Model
+To use this, simply `pip install flask`, run the script, and send a POST request to `http://127.0.0.1:5000` with the following JSON body:
 
-TODO
+```json
+{
+  "prompt": "Tell me a fun fact about dogs",
+  "max_tokens": 50,
+}
+```
 
 ### Remote API Access
 
-TODO
+By default, your Flask API will only be accessible from your local machine. You can use a ervice like `ngrok` to expose your API to external requests. See [the docs](https://ngrok.com/docs/using-ngrok-with/flask/) for more information.
 
 ## Integration with Microsoft Guidance
 
