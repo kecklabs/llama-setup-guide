@@ -9,13 +9,15 @@ A guide for setting up the LLaMA 2 LLM on a local ubuntu machine.
     - [Model Formats](#model-formats)
     - [CPU vs GPU Memory](#cpu-vs-gpu-memory)
   - [Obtaining a Model](#obtaining-a-model)
-    - [Recommended Models](#recommended-models)
+    - [Recommended GGUF Models](#recommended-gguf-models)
+    - [Converting Transformers Models to GGUF Format](#converting-transformers-models-to-gguf-format)
   - [Setting Up GPU Support](#setting-up-gpu-support)
+    - [CUDA Installation Troubleshooting](#cuda-installation-troubleshooting)
   - [Running Your Model](#running-your-model)
-    - [Troubleshooting](#troubleshooting)
+    - [Model Query Troubleshooting](#model-query-troubleshooting)
   - [Setting Up an API Server](#setting-up-an-api-server)
-    - [Creating a Flask API Route](#creating-a-flask-api-route)
-    - [Remote API Access via ngrok](#remote-api-access-via-ngrok)
+    - [Creating an API Route to Query the Model](#creating-an-api-route-to-query-the-model)
+    - [Remote API Access](#remote-api-access)
   - [Integration with Microsoft Guidance](#integration-with-microsoft-guidance)
   - [Resources](#resources)
 
@@ -59,14 +61,30 @@ One benefit of using a GGUF model is that you can split the model between CPU an
 
 GGUF models often have multiple downloads for different quantization levels (`Q4_K_M`, `Q2_K`, etc). This affects the accuracy and memory footprint of the model. I recommend starting with `Q4_K_M` for balanced size and quality.
 
-### Recommended Models
+### Recommended GGUF Models
 
 - [orca_mini_v3_7B](https://huggingface.co/TheBloke/orca_mini_v3_7B-GGUF) is a great starting point and one of the best 7B models I've found. It also comes in 13B and 70B sizes if you need better accuracy.
 - [Upstage-Llama-2-70B-instruct-v2-GGUF](https://huggingface.co/TheBloke/Upstage-Llama-2-70B-instruct-v2-GGUF) is one of the top ranked 70B models on huggingface and has been effective for decision making and other complex tasks.
 
+### Converting Transformers Models to GGUF Format
+
+Many models on HuggingFace are only available in the transformers (hf) format. They can be converted to the GGUF format by following [this guide](https://www.substratus.ai/blog/converting-hf-model-gguf-model/).
+
 ## Setting Up GPU Support
 
-TODO
+This is optional if you only plan to run models on the CPU (not recommended). Make sure your GPU is CUDA compatible before following these steps. You can check your GPU's compatibility [here](https://developer.nvidia.com/cuda-gpus).
+
+First, check if you have CUDA installed already:
+
+```bash
+nvcc --version
+```
+
+If you get a "command not found" error, you'll need to install the CUDA toolkit from [here](https://developer.nvidia.com/cuda-downloads). Once installed, `nvcc --version` should return a version number.
+
+### CUDA Installation Troubleshooting
+
+If you still get an error running `nvcc --version` after installation, you may need to manually add CUDA to your path. Check out [this](https://askubuntu.com/a/885627) post for instructions.
 
 ## Running Your Model
 
@@ -77,7 +95,8 @@ We will use the [llama-cpp-python](https://github.com/abetlen/llama-cpp-python) 
 1. Install the `llama-cpp-python` package in your virtual environment:
 
 ```bash
-pip install llama-cpp-python
+# Compile with CUDA support
+CMAKE_ARGS=-DLLAMA_CUBLAS=on FORCE_CMAKE=1 pip install llama-cpp-python --force-reinstall --upgrade --no-cache-dir
 ```
 
 2. Create a python script to load and query your model. See this example (also in `sample_query.py`):
@@ -118,19 +137,25 @@ Q: Name the planets in the solar system? A: 8 Planets in our Solar System are Me
 
 Note that this may take a while to run since the model must be loaded into memory. Once the model is loaded (by calling `Llama()`), subsequent calls to `llm()` will be much faster.
 
-### Troubleshooting
+To ensure you are using GPU memory, you can run with `verbose=True` to verify that layers have been loaded onto the GPU's VRAM via CUDA. You can also run `nvidia-smi -l 1` in a separate terminal to monitor GPU memory usage (VRAM usage should go up when you run it).
 
-TODO
+### Model Query Troubleshooting
+
+You may see `CUDA error: out of memory` if the model is too large to fit in GPU memory. There are a few ways to work around this:
+
+- Split layers between the CPU and GPU by modifying the `n_gpu_layers` parameter in the code. The `verbose=True` output should show the total number of layers the model has. Try setting `n_gpu_layers` to a number less than this.
+- Use a model with a smaller quantization level (e.g. `Q2_K` instead of `Q4_K_M`)
+- Use a smaller model (e.g. 7B instead of 13B)
 
 ## Setting Up an API Server
 
 TODO
 
-### Creating a Flask API Route
+### Creating an API Route to Query the Model
 
 TODO
 
-### Remote API Access via ngrok
+### Remote API Access
 
 TODO
 
