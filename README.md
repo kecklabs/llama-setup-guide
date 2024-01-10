@@ -161,7 +161,7 @@ To use this, simply `pip install flask`, run the script, and send a POST request
 
 ### Remote API Access
 
-By default, your Flask API will only be accessible from your local machine. You can use a ervice like `ngrok` to expose your API to external requests. See [the docs](https://ngrok.com/docs/using-ngrok-with/flask/) for more information.
+By default, your Flask API will only be accessible from your local machine. You can use a service like `ngrok` to expose your API to external requests. See [the docs](https://ngrok.com/docs/using-ngrok-with/flask/) for more information.
 
 ## Integration with Guidance
 
