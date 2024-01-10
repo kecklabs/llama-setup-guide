@@ -95,7 +95,7 @@ Remember to replace `PATH_TO_MODEL` with the path to your model file (from this 
 3. Run the script!
 
 ```bash
-python query.py
+python sample_query.py
 ```
 
 It may take some time to load the model, but you should soon see output in the console!
