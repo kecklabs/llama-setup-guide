@@ -10,6 +10,7 @@ A guide for setting up the LLaMA 2 LLM on a local ubuntu machine.
     - [CPU vs GPU Memory](#cpu-vs-gpu-memory)
   - [Obtaining a Model](#obtaining-a-model)
     - [Recommended Models](#recommended-models)
+  - [Setting Up GPU Support](#setting-up-gpu-support)
   - [Running Your Model](#running-your-model)
     - [Troubleshooting](#troubleshooting)
   - [Setting Up an API Server](#setting-up-an-api-server)
@@ -62,6 +63,10 @@ GGUF models often have multiple downloads for different quantization levels (`Q4
 
 - [orca_mini_v3_7B](https://huggingface.co/TheBloke/orca_mini_v3_7B-GGUF) is a great starting point and one of the best 7B models I've found. It also comes in 13B and 70B sizes if you need better accuracy.
 - [Upstage-Llama-2-70B-instruct-v2-GGUF](https://huggingface.co/TheBloke/Upstage-Llama-2-70B-instruct-v2-GGUF) is one of the top ranked 70B models on huggingface and has been effective for decision making and other complex tasks.
+
+## Setting Up GPU Support
+
+TODO
 
 ## Running Your Model
 
