@@ -9,7 +9,7 @@ llm = Llama(
 
 output = llm(
     "Q: Name the planets in the solar system? A: ",  # Prompt
-    max_tokens=32,  # Generate up to 32 tokens
+    max_tokens=50,  # Generate up to 32 tokens
     stop=["Q:", "\n"],  # Keywords to stop generation at
     echo=True  # Echo the prompt back in the output
 )
