@@ -51,7 +51,7 @@ You might come across a few different formats of LLaMA2 models online, including
 
 When running any LLM, the entire model must be loaded into the memory of the machine. Every model has different memory requirements, typically listed somewhere in the model's documentation. The larger the model, the more memory it requires.
 
-There are two types of memory available on most machines: CPU (RAM) and GPU (VRAM). CPU memory is typically much larger than GPU memory, but also _significantly_ slower. I highly recommend running your model on a GPU if possible.
+There are two types of memory available on most machines: CPU (RAM) and GPU (VRAM). CPU memory is typically much larger than GPU memory, but is also significantly slower. I highly recommend running your model on a GPU if possible.
 
 One benefit of using a GGUF model is that you can split the model between CPU and GPU memory. For instance, if you are running a 20GB model on a system with only 12GB of VRAM, you can split the model into roughly 12GB on the GPU and 8GB on the CPU. It will be slower than running the entire model on the GPU, but much faster than running the entire model on the CPU.
 
