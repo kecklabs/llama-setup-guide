@@ -81,9 +81,10 @@ pip install llama-cpp-python
 from llama_cpp import Llama
 
 llm = Llama(
-    model_path="PATH_TO_MODEL",  # Replace with path to your model file!
+    model_path="orca_mini_v3_7b.Q4_K_M.gguf",  # Path to model file
     n_ctx=4096,  # Context window size
-    n_gpu_layers=-1  # -1 to use all GPU layers, 0 to use only CPU
+    n_gpu_layers=-1,  # -1 to use all GPU layers, 0 to use only CPU,
+    verbose=False  # Whether to print debug info
 )
 
 output = llm(
@@ -93,7 +94,7 @@ output = llm(
     echo=True  # Echo the prompt back in the output
 )
 
-print(output)  # Print the generated output
+print(output['choices'][0]['text'])  # Print the generated output
 ```
 
 Remember to replace `PATH_TO_MODEL` with the path to your model file (from this script).
@@ -102,6 +103,12 @@ Remember to replace `PATH_TO_MODEL` with the path to your model file (from this 
 
 ```bash
 python sample_query.py
+```
+
+You should see an output similar to this:
+
+```text
+Q: Name the planets in the solar system? A: 8 Planets in our Solar System are Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune
 ```
 
 Note that this may take a while to run since the model must be loaded into memory. Once the model is loaded (by calling `Llama()`), subsequent calls to `llm()` will be much faster.

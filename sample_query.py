@@ -1,9 +1,10 @@
 from llama_cpp import Llama
 
 llm = Llama(
-    model_path="PATH_TO_MODEL",  # Replace with path to your model file!
+    model_path="orca_mini_v3_7b.Q4_K_M.gguf",  # Path to model file
     n_ctx=4096,  # Context window size
-    n_gpu_layers=-1  # -1 to use all GPU layers, 0 to use only CPU
+    n_gpu_layers=-1,  # -1 to use all GPU layers, 0 to use only CPU,
+    verbose=False  # Whether to print debug info
 )
 
 output = llm(
@@ -13,4 +14,4 @@ output = llm(
     echo=True  # Echo the prompt back in the output
 )
 
-print(output)  # Print the generated output
+print(output['choices'][0]['text'])  # Print the generated output
