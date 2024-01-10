@@ -17,7 +17,7 @@ A guide for setting up the LLaMA 2 LLM on a local ubuntu machine.
     - [Model Query Troubleshooting](#model-query-troubleshooting)
   - [Setting Up an API Server](#setting-up-an-api-server)
     - [Remote API Access](#remote-api-access)
-  - [Integration with Microsoft Guidance](#integration-with-microsoft-guidance)
+  - [Integration with Guidance](#integration-with-guidance)
   - [Resources](#resources)
 
 ## Prerequisites
@@ -163,10 +163,15 @@ To use this, simply `pip install flask`, run the script, and send a POST request
 
 By default, your Flask API will only be accessible from your local machine. You can use a ervice like `ngrok` to expose your API to external requests. See [the docs](https://ngrok.com/docs/using-ngrok-with/flask/) for more information.
 
-## Integration with Microsoft Guidance
+## Integration with Guidance
 
-TODO
+**Guidance** is a tool that serves as a language for controlling LLMs, offering features such as constrained generation, templates, custom grammars, and more. Check out the Guidance repo [here](https://github.com/guidance-ai/guidance). A brief example has been provided in `sample_guidance.py` for reference.
 
 ## Resources
 
-TODO
+- [huggingface](https://huggingface.co/)
+- [llama.cpp repo](https://github.com/ggerganov/llama.cpp)
+- [llama-cpp-python repo](https://github.com/abetlen/llama-cpp-python)
+- [guidance repo](https://github.com/guidance-ai/guidance)
+- [flask docs](https://flask.palletsprojects.com/en/3.0.x/)
+- [ngrok docs](https://ngrok.com/docs)
