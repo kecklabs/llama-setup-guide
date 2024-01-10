@@ -98,4 +98,4 @@ Remember to replace `PATH_TO_MODEL` with the path to your model file (from this 
 python sample_query.py
 ```
 
-It may take some time to load the model, but you should soon see output in the console!
+Note that this may take a while to run since the model must be loaded into memory. Once the model is loaded (by calling `Llama()`), subsequent calls to `llm()` will be much faster.
