@@ -27,7 +27,7 @@ You'll need a capable machine that:
 
 - Runs Ubuntu or some other Linux distribution
 - Has enough RAM to fit any models you want to use in memory
-  - GPU memory (VRAM) is highly preferred (see [background](#background))
+  - GPU memory (VRAM) is highly preferred (see [CPU vs GPU Memory](#cpu-vs-gpu-memory))
 - Has sufficient local storage to store models
 - Has Python 3.8 or higher installed
 
