@@ -1,6 +1,6 @@
 # LLaMA-2 Setup Guide
 
-A guide for setting up the LLaMA 2 LLM on a local ubuntu machine.
+A guide for setting up the LLaMA 2 LLM on a local machine.
 
 - [LLaMA-2 Setup Guide](#llama-2-setup-guide)
   - [Prerequisites](#prerequisites)
@@ -18,17 +18,24 @@ A guide for setting up the LLaMA 2 LLM on a local ubuntu machine.
   - [Setting Up an API Server](#setting-up-an-api-server)
     - [Remote API Access](#remote-api-access)
   - [Integration with Guidance](#integration-with-guidance)
+  - [CUDA Setup For Windows](#cuda-setup-for-windows)
+    - [Step 1: Install GCC](#step-1-install-gcc)
+    - [Step 2: Install Microsoft Visual Studio](#step-2-install-microsoft-visual-studio)
+    - [Step 3: Configure CMake to use Visual Studio](#step-3-configure-cmake-to-use-visual-studio)
+    - [Step 4: Install CUDA](#step-4-install-cuda)
   - [Resources](#resources)
 
 ## Prerequisites
 
 You'll need a capable machine that:
 
-- Runs Ubuntu or some other Linux distribution
 - Has enough RAM to fit any models you want to use in memory
   - GPU memory (VRAM) is highly preferred (see [CPU vs GPU Memory](#cpu-vs-gpu-memory))
 - Has sufficient local storage to store models
 - Has Python 3.8 or higher installed
+- Preferably runs Linux (Ubuntu is recommended)
+
+Note that MacOS does not support CUDA (required for GPU acceleration), but you can still run models on the CPU.
 
 ## Background
 
@@ -73,6 +80,8 @@ Many models on HuggingFace are only available in the transformers (hf) format. T
 
 This is optional if you only plan to run models on the CPU (not recommended). Make sure your GPU is CUDA compatible before following these steps. You can check your GPU's compatibility [here](https://developer.nvidia.com/cuda-gpus).
 
+[!] Important: The steps here are for intended for Linux systems. If you are using Windows, see [CUDA Setup For Windows](#cuda-setup-for-windows). MacOS does not support CUDA.
+
 First, check if you have CUDA installed already:
 
 ```bash
@@ -91,11 +100,19 @@ If you still get an error running `nvcc --version` after installation, you may n
 
 We will use the [llama-cpp-python](https://github.com/abetlen/llama-cpp-python) package to run our model:
 
-1. Install the `llama-cpp-python` package in your virtual environment:
+1. Install the `llama-cpp-python` package in your virtual environment. The command will differ depending on platform:
 
 ```bash
-# Compile with CUDA support
+# CPU Only
+pip install llama-cpp-python
+
+# With CUDA Support (Linux)
 CMAKE_ARGS=-DLLAMA_CUBLAS=on FORCE_CMAKE=1 pip install llama-cpp-python --force-reinstall --upgrade --no-cache-dir
+
+# With CUDA Support (Windows)
+# Note: These are two separate commands, run them separately
+set CMAKE_ARGS=-DLLAMA_CUBLAS=on FORCE_CMAKE=1
+pip install llama-cpp-python --force-reinstall --upgrade --no-cache-dir
 ```
 
 2. Create a python script to load and query your model. See this example (also in `sample_query.py`):
@@ -166,6 +183,60 @@ By default, your Flask API will only be accessible from your local machine. You 
 ## Integration with Guidance
 
 **Guidance** is a tool that serves as a language for controlling LLMs, offering features such as constrained generation, templates, custom grammars, and more. Check out the Guidance repo [here](https://github.com/guidance-ai/guidance). A brief example has been provided in `sample_guidance.py` for reference.
+
+## CUDA Setup For Windows
+
+Setting up CUDA on Windows involves a few extra steps, detailed below. These steps are kindly provided by Qingwen Zeng.
+
+### Step 1: Install GCC
+
+Download GCC for Windows here: <https://sourceforge.net/projects/mingw/>
+
+Once installed, add the bin folder to your `$PATH` variable:
+
+```bash
+C:\MinGW\bin
+```
+
+### Step 2: Install Microsoft Visual Studio
+
+Download Visual Studio here: <https://visualstudio.microsoft.com/downloads/>
+
+The installer will also install CMake, which you will also need to add to your `$PATH` variable:
+
+```bash
+C:\Program Files\CMake\bin
+```
+
+### Step 3: Configure CMake to use Visual Studio
+
+Copy the 4 VS integration files:
+
+```bash
+# copy the 4 files from:
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.2\extras\visual_studio_integration\MSBuildExtensions
+# to both of these locations:
+C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Microsoft\VC\v170\BuildCustomizations
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\BuildCustomizations
+```
+
+If you encounter a `No CUDA toolset found` error, see [here](https://stackoverflow.com/a/76978821/23318240)
+
+### Step 4: Install CUDA
+
+Download the CUDA Toolkit from [here](https://developer.nvidia.com/cuda-downloads?target_os=Windows). Once installed, add the bin folder to your `$PATH` variable:
+
+```bash
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\bin
+```
+
+To verify that CUDA is installed, run the following command:
+
+```bash
+nvcc --version # should return a version number
+```
+
+If this works, CUDA is installed! You may proceed with [running your model](#running-your-model).
 
 ## Resources
 
